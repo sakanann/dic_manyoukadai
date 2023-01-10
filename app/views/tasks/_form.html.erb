@@ -1,0 +1,15 @@
+<%= form_with(model: task, local: true) do |f| %>
+  <%= f.label 'タスク名' %>
+  <br>
+  <%= f.text_field :title %>
+  <br>
+  <%= f.label 'タスク詳細' %>
+  <br>
+  <%= f.text_area :content %>
+  <br>
+  <% if current_page?(new_task_path) %>
+    <%= f.submit "登録する" %>
+  <% else %>
+    <%= f.submit "編集する" %>
+  <% end %>
+<% end %>

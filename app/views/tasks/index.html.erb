@@ -10,9 +10,10 @@
 <% @tasks.each do |t| %>
   <tr>
   <td>投稿者の名前</td>
-  <td><<%= t.title %>/td>
-  <td><<%= t.content %>/td>
-  <td></td>
+  <td><%= t.title %>/td>
+  <td><%= t.content %>/td>
+  <td><%= link_to '詳細', t %></td>
+  <td><%= link_to '編集', edit_task_path(task.id) %></td>
   </tr>
 <% end %>
 </body>
