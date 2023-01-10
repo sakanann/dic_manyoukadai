@@ -7,14 +7,15 @@
 </head>
 
 <body>
-<% @tasks.each do |t| %>
+<% @tasks.each do |task| %>
   <tr>
   <td>投稿者の名前</td>
-  <td><%= t.title %>/td>
-  <td><%= t.content %>/td>
-  <td><%= link_to '詳細', t %></td>
+  <td><%= task.title %></td>
+  <td><%= task.content %></td>
+  <td><%= link_to '詳細', task_path(task.id) %></td>
   <td><%= link_to '編集', edit_task_path(task.id) %></td>
   </tr>
 <% end %>
 </body>
 </table>
+<%=link_to '新規作成', new_task_path %>
