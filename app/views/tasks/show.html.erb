@@ -1,2 +1,10 @@
-<h1>Tasks#show</h1>
-<p>Find me in app/views/tasks/show.html.erb</p>
+<% @task.each do |t| %>
+  <b>タスク名</b>
+  <br>
+  <%= t.title %>
+  <br>
+  <b>タスク詳細</b>
+  <br>
+  <%= t.content %>
+<% end %>
+<%= link_to '一覧', tasks_path %>
