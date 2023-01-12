@@ -22,6 +22,7 @@ gem 'net-smtp'
 gem 'net-imap'
 gem 'net-pop'
 ```
+作成しているアプリのディレクトリに行き - heroku create
 git commitコマンドを使用して、コミット
 1. `git add` <br>
    `git commit` <br>
