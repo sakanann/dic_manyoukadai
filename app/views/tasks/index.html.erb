@@ -2,17 +2,15 @@
 <h1>Task一覧</h1>
 <table>
 <head>
-  <th>投稿者</th>
   <th>タスク名</th>
   <th>詳細</th>
 </head>
 
 <body>
 <% @tasks.each do |task| %>
-  <tr>
-  <td>投稿者の名前</td>
-  <td><%= task.title %></td>
-  <td><%= task.content %></td>
+  <tr class = "task_row">
+      <td><%= task.title %></td>
+      <td><%= task.content %></td>
   <td><%= link_to '詳細', task_path(task.id) %></td>
   <td><%= link_to '編集', edit_task_path(task.id) %></td>
   <td><%= link_to '削除', task_path(task.id), method: :delete, data: { confirm: '本当に削除しますか？'} %></td>
