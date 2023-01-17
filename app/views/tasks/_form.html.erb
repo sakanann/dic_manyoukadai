@@ -1,12 +1,20 @@
 <%= form_with(model: task, local: true) do |form| %>
+
+<div class="task_field">
   <%= form.label 'タスク名' %>
-  <br>
   <%= form.text_field :title %>
-  <br>
-  <%= form.label 'タスク詳細' %>
-  <br>
+</div>
+
+<div class="task_field">  
+  <%= form.label '内容' %>
   <%= form.text_area :content %>
-  <br>
+</div>
+
+<div class="task_field">
+  <%= form.label '終了期限' %>
+  <%= form.datetime_field :expired_at %>
+
+
   <% if current_page?(new_task_path) %>
     <%= form.submit "登録する" %>
   <% else %>
