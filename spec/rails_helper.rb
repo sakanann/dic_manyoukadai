@@ -48,9 +48,17 @@ RSpec.configure do |config|
   #     end
   #   end
   # end
-  
+
+
+# ------------------------------------------------------------1/18 
+#   jsを使用するsystem specの場合はchromeのヘッドレスドライバを使用するよう設定する。
+# (※jsを使用しないテストの場合は、高速なRack::Testドライバを使用)
   # config.before(:each, type: :system) do
-  #   driven_by(:rack_test)
+  #   driven_by :rack_test
+  # end
+  
+  # config.before(:each, type: :system, js: true) do
+  #   driven_by :selenium_chrome_headless
   # end
 
 
