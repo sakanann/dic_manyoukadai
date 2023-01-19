@@ -25,21 +25,25 @@ RSpec.describe 'タスク管理機能', type: :system do
 
     context 'タスクが作成日時の降順に並んでいる場合' do
       it '新しいタスクが一番上に表示される' do
+        task = FactoryBot.create(:task)
         visit tasks_path
         task_list = all('.task_row')
-        expect(task_list.first).to have_content 'task'
+
+        expect(task_list.first).to have_content 'タスク1'
       end
     end
 
     context 'タスクが終了期限の降順に並んでいる場合' do
       it '終了期限が近いものから表示する' do
-        task = FactoryBot.create(:task)
+        task = FactoryBot.create(:task, expired_at: '2022-01-18')
+        #facboの呼び出してるがカラム指定してるから関係あまりなし
         # task = FactoryBot.create(:task)
         visit tasks_path
+        tasks_path(sort_expired_at: "true")
         task_list = all('.task_row')
         click_on "終了期限"
-        # expect(task_list[0]).to have_content 'うにゃ'
-        expect(task_list[1]).to have_content 'むにゃ'
+        expect(task_list[0]).to have_content '2022-01-18'
+        expect(task_list.first).to have_content '2022-01-18'
       end
     end
   end
