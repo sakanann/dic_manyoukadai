@@ -2,7 +2,8 @@
 <h1>Task一覧</h1>
 
 <%= link_to "終了期限でソートする", tasks_path(sort_expired_at: "true") %>
-
+<br>
+<%= link_to "作成日でソートする", tasks_path %>
 <table>
 <head>
   <th>タスク名</th>
