@@ -1,15 +1,27 @@
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all
+    @tasks = Task.all.order(created_at: :desc) #
     if params[:sort_expired_at]
-      @tasks = Task.all.order(expired_at: :desc)
-    elsif params[:task].present?
-      @tasks = Task.where('title LIKE ?', "%#{params[:task][:title]}%")
-    else
-      @tasks = Task.all.order(created_at: :desc) 
+      @tasks = @tasks.all.order(expired_at: :desc)
+    end
+
+    #タイトルとステータス絞り込み
+    if params[:task].present?
+      if params[:task][:status].present? && params[:task][:title].present?  
+        @tasks = @tasks.where('title LIKE ?', "%#{params[:task][:title]}%")
+        @tasks = @tasks.where(status: params[:task][:status])
+        # タイトルのみで検索
+      elsif params[:task][:title].present?
+        @tasks = @tasks.where('title LIKE ?', "%#{params[:task][:title]}%")
+        
+        # ステータスのみで検索
+      elsif params[:task][:status].present? 
+        @tasks = @tasks.where(status: params[:task][:status])
+      end
     end
   end
 
+  
   def new
     @task = Task.new
   end

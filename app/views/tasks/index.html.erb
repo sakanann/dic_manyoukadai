@@ -1,21 +1,23 @@
 <p id="notice"><%= notice %></p>
-<h1>Task一覧</h1>
+<h1><%= link_to "Task一覧", tasks_path %></h1>
 
 <!--検索フォーム-->
 <%= form_with(scope: :task, local: true, method: :get, url: tasks_path) do |form| %>
   <%= form.text_field :title %>
+  <%= form.select :status, [["", ""], ["未着手", 0], ["着手中", 1], [ "完了", 2]] %>
   <%= form.submit '検索' %>
 <% end %>
 
 <%= link_to "終了期限でソートする", tasks_path(sort_expired_at: "true") %>
-<br>
+
 <%= link_to "作成日でソートする", tasks_path %>
 <table>
 <head>
-  <th>タスク名</th>
-  <th>内容</th>
-  <th>終了期限</th>
-  <th>ステータス</th>
+  <th><%= t('.title') %></th>
+  <th><%= t('.content') %></th>
+  <th><%= t('.expired_at') %></th>
+  <th><%= t('.status') %></th>
+  <th><%= t('.created_at') %></th>
 </head>
 
 <body>
@@ -25,6 +27,7 @@
       <td><%= task.content %></td>
       <td><%= task.expired_at %></td>
       <td><%= task.status %></td>
+      <td><%= task.created_at %></td>
   <td><%= link_to '詳細', task_path(task.id) %></td>
   <td><%= link_to '編集', edit_task_path(task.id) %></td>
   <td><%= link_to '削除', task_path(task.id), method: :delete, data: { confirm: '本当に削除しますか？'} %></td>
