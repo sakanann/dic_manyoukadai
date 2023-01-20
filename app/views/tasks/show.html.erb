@@ -8,11 +8,11 @@
 <br>
 <b>終了期限</b>
 <br>
-<%= @task.expired_at %>
+<%= @task.expired_at.strftime("%Y-%m-%d %H:%M") %>
 <br>
 <b>タスク作成日</b>
 <br>
-<%= @task.created_at %>
+<%= @task.created_at.strftime("%Y-%m-%d %H:%M") %>
 <br>
 <b>ステータス<b>
 <br>

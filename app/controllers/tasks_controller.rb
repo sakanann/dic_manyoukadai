@@ -2,21 +2,30 @@ class TasksController < ApplicationController
   def index
     @tasks = Task.all.order(created_at: :desc) 
     if params[:sort_expired_at]
-      @tasks = @tasks.all.order(expired_at: :desc)
+      @tasks =Task.all.order(expired_at: :desc)
     end
 
     #タイトルとステータス絞り込み
     if params[:task].present?
-      if params[:task][:status].present? && params[:task][:title].present?  
-        @tasks = @tasks.where('title LIKE ?', "%#{params[:task][:title]}%")
-        @tasks = @tasks.where(status: params[:task][:status])
-        # タイトルのみで検索
+      if params[:task][:title].present? && params[:task][:status].present?
+        @tasks = @tasks.scope_title(params[:task][:title])
+        @tasks = @tasks.scope_status(params[:task][:status])
       elsif params[:task][:title].present?
-        @tasks = @tasks.where('title LIKE ?', "%#{params[:task][:title]}%")
-        
-        # ステータスのみで検索
+        @tasks = @tasks.scope_title(params[:task][:title])
       elsif params[:task][:status].present? 
-        @tasks = @tasks.where(status: params[:task][:status])
+        @tasks = @tasks.scope_status(params[:task][:status])
+
+    # if params[:task].present?
+    #   if params[:task][:title].present? && params[:task][:status].present?
+        # @tasks = @tasks.where('title LIKE ?', "%#{params[:task][:title]}%")
+        # @tasks = @tasks.where(status: params[:task][:status])
+        # タイトルのみで検索
+      # elsif params[:task][:title].present?
+      #   @tasks = @tasks.where('title LIKE ?', "%#{params[:task][:title]}%")
+        
+      #   # ステータスのみで検索
+      # elsif params[:task][:status].present? 
+      #   @tasks = @tasks.where(status: params[:task][:status])
       end
     end
   end
