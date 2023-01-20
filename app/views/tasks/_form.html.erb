@@ -13,11 +13,17 @@
 <div class="task_field">
   <%= form.label '終了期限' %>
   <%= form.datetime_field :expired_at %>
+</div>
 
 <div class="task_field">
   <%= form.label 'ステータス' %>
   <%= form.select :status, Task.statuses.keys %>
+</div>
 
+<div class="task_field">
+  <%= form.label '優先順位' %>
+  <%= form.select :priority, Task.priorities.keys.to_a, {} %>
+</div>
 
   <% if current_page?(new_task_path) %>
     <%= form.submit "登録する" %>
