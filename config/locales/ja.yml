@@ -14,6 +14,7 @@ ja:
       expired_at: 終了期限
       status: ステータス
       created_at: タスク作成日
+      priority: 優先順位
   
   
   

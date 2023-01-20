@@ -17,7 +17,7 @@
 
 <div class="task_field">
   <%= form.label 'ステータス' %>
-  <%= form.select :status, Task.statuses.keys %>
+  <%= form.select :status, Task.statuses.keys.to_a, include_blank: '選択してください', class: 'form-control', required: true %>
 </div>
 
 <div class="task_field">
