@@ -1,10 +1,10 @@
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all.order(created_at: :desc) 
+    @tasks = Task.all.default_sort
     if params[:sort_expired_at]
-      @tasks = Task.all.order(expired_at: :desc)
-    else params[:sort_priority]
-      @tasks = Task.all.order(priority: :desc)
+      @tasks = Task.all.sort_expired_at
+    elsif params[:sort_priority]
+      @tasks = Task.all.sort_priority
     end
 
     #タイトルとステータス絞り込み
