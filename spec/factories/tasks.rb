@@ -4,7 +4,7 @@ FactoryBot.define do
   # （実際に存在するクラス名と一致するテストデータの名前をつければ、そのクラスのテストデータを自動で作成します）
   factory :task do
     title { 'タスク1' }
-    content { 'タスク9' }
+    content { '詳細' }
     expired_at {'2022-01-14'}
   end
   # 作成するテストデータの名前を「second_task」とします
@@ -12,6 +12,6 @@ FactoryBot.define do
   factory :second_task, class: Task do
     title { 'タスク2' }
     content { 'タスク8' }
-    
+    expired_at {'2022-01-15'}
   end
 end

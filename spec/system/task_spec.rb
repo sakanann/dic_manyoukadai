@@ -1,7 +1,6 @@
 require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
-
-  let!(:task) { FactoryBot.create(:task, title: 'task') }
+  let!(:task) { FactoryBot.create(:task, title: 'task', content: '詳細', expired_at: '') }
 
   describe '新規作成機能' do
     context 'タスクを新規作成した場合' do
@@ -9,8 +8,15 @@ RSpec.describe 'タスク管理機能', type: :system do
         visit new_task_path
         fill_in 'task[title]', with: 'test'
         fill_in 'task[content]', with: 'test'
+        fill_in 'task_expired_at', with: "2022-01-01"
+        select '未着手', from: 'task[status]'
+        select '中', from 'task[priority]'
         click_on '登録する'
         expect(page).to have_content 'test'
+        expect(page).to have_content 'test'
+        expect(page).to have_content '2022-01-01'
+        expect(page).to have_content '未着手'
+        expect(page).to have_content '高'
       end
     end
   end
