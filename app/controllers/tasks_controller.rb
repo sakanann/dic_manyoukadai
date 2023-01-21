@@ -4,7 +4,7 @@ class TasksController < ApplicationController
     if params[:sort_expired_at]
       @tasks = Task.all.order(expired_at: :desc)
     else params[:sort_priority]
-      @tasks = Task.all.order(priority: "asc")
+      @tasks = Task.all.order(priority: :desc)
     end
 
     #タイトルとステータス絞り込み
@@ -16,18 +16,6 @@ class TasksController < ApplicationController
         @tasks = @tasks.scope_title(params[:task][:title])
       elsif params[:task][:status].present? 
         @tasks = @tasks.scope_status(params[:task][:status])
-
-    # if params[:task].present?
-    #   if params[:task][:title].present? && params[:task][:status].present?
-        # @tasks = @tasks.where('title LIKE ?', "%#{params[:task][:title]}%")
-        # @tasks = @tasks.where(status: params[:task][:status])
-        # タイトルのみで検索
-      # elsif params[:task][:title].present?
-      #   @tasks = @tasks.where('title LIKE ?', "%#{params[:task][:title]}%")
-        
-      #   # ステータスのみで検索
-      # elsif params[:task][:status].present? 
-      #   @tasks = @tasks.where(status: params[:task][:status])
       end
     end
   end
