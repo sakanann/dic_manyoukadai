@@ -34,13 +34,12 @@
       <td><%= task.created_at.strftime("%Y-%m-%d %H:%M") %></td>
       <td><%= task.status %></td>
       <td><%= task.priority %></td>
-  <td><%= link_to '詳細', task_path(task.id) %></td>
-  <td><%= link_to '編集', edit_task_path(task.id) %></td>
-  <td><%= link_to '削除', task_path(task.id), method: :delete, data: { confirm: '本当に削除しますか？'} %></td>
+  <td><%= link_to '詳細', task_path(task.id), class:"btn btn-outline-primary" %></td>
+  <td><%= link_to '編集', edit_task_path(task.id),class:"btn btn-outline-success" %></td>
+  <td><%= link_to '削除', task_path(task.id), method: :delete, data: { confirm: '本当に削除しますか？'}, class:"btn btn-outline-danger" %></td>
   </tr>
 <% end %>
 </body>
 </table>
 <%= paginate @tasks %>
 <%=link_to '新規作成', new_task_path %>
-

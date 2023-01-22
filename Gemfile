@@ -44,3 +44,6 @@ gem 'net-imap'
 gem 'net-pop'
 
 gem 'kaminari', '~> 0.17.0'
+
+gem 'bootstrap', '~> 4.1.1'
+gem 'jquery-rails'
