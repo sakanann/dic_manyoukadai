@@ -12,10 +12,13 @@
   </div>
 <% end %>
 
-<%= link_to "終了期限でソートする", tasks_path(sort_expired_at: "true") %>
-<%= link_to '優先順位でソート', tasks_path(sort_priority: "true") %>
-<%= link_to "作成日でソートする", tasks_path %>
-<table>
+<div class="btn-group">
+<button type="button" class="btn btn-light"><%= link_to "終了期限でソートする", tasks_path(sort_expired_at: "true") %></button>
+<button type="button" class="btn btn-light"><%= link_to '優先順位でソート', tasks_path(sort_priority: "true") %></button>
+<button type="button" class="btn btn-light"><%= link_to "作成日でソートする", tasks_path %></button>
+</div>
+
+<table class="table">
 <head>
   <th><%= t('.title') %></th>
   <th><%= t('.content') %></th>
@@ -23,6 +26,7 @@
   <th><%= t('.created_at') %></th>
   <th><%= t('.status') %></th>
   <th><%= t('.priority') %></th>
+  <th></th>
 </head>
 
 <body>
@@ -41,5 +45,6 @@
 <% end %>
 </body>
 </table>
+
 <%= paginate @tasks %>
-<%=link_to '新規作成', new_task_path %>
+<button type="button" class="btn btn-light"><%=link_to '新規作成', new_task_path %></button>
