@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'タスクモデル機能', type: :model do
   describe 'バリデーションのテスト' do
     context 'タスクのタイトルが空の場合' do
-      it 'バリデーションにひっかる' do
+      it 'バリデーションにひっかかる' do
         task = Task.new(title: '', content: '失敗テスト1')
         expect(task).not_to be_valid
       end
@@ -18,6 +18,34 @@ RSpec.describe 'タスクモデル機能', type: :model do
       it 'バリデーションが通る' do
         task = Task.new(title: '成功1', content: '成功2')
         expect(task).to be_valid
+      end
+    end
+  end
+
+  describe '検索機能' do
+    # 必要に応じて、テストデータの内容を変更して構わない
+    let!(:task) { FactoryBot.create(:task, title: '坂本') }
+    let!(:second_task) { FactoryBot.create(:second_task, title: "sample") }
+    context 'scopeメソッドでタイトルのあいまい検索をした場合' do
+      it "検索キーワードを含むタスクが絞り込まれる" do
+        # title_seachはscopeで提示したタイトル検索用メソッドである。メソッド名は任意で構わない。
+        expect(Task.scope_title('坂本')).to include(task)
+        expect(Task.scope_title('坂本')).not_to include(second_task)
+        expect(Task.scope_title('坂本').count).to eq 1
+      end
+    end
+    context 'scopeメソッドでステータス検索をした場合' do
+      it "ステータスに完全一致するタスクが絞り込まれる" do
+        expect(Task.where(status: '着手中')).to include(task)
+        expect(Task.where(status: '着手中')).not_to include(second_task)
+        expect(Task.where(status: '着手中').count).to eq 1
+      end
+    end
+    context 'scopeメソッドでタイトルのあいまい検索とステータス検索をした場合' do
+      it "検索キーワードをタイトルに含み、かつステータスに完全一致するタスク絞り込まれる" do
+        expect(Task.scope_title('坂').where(status: "着手中")).to include(task)
+        expect(Task.scope_title('坂').where(status: "着手中")).not_to include(second_task)
+        expect(Task.scope_title('坂').where(status: "着手中").count).to eq 1
       end
     end
   end

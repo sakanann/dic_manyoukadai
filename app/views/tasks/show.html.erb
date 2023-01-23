@@ -1,9 +1,25 @@
 <b>タスク名</b>
-<br>
 <%= @task.title %>
 <br>
+
 <b>タスク詳細</b>
-<br>
 <%= @task.content %>
 <br>
+
+<b>終了期限</b>
+<%= @task.expired_at.strftime("%Y-%m-%d %H:%M") %>
+<br>
+
+<b>タスク作成日</b>
+<%= @task.created_at.strftime("%Y-%m-%d %H:%M") %>
+<br>
+
+<b>ステータス</b>
+<%= @task.status %>
+<br>
+
+<b>優先順位</b>
+<%= @task.priority %>
+<br>
+
 <%= link_to '一覧', tasks_path %>

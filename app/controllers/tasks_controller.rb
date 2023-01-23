@@ -1,7 +1,25 @@
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all.order(created_at: :desc)
+    @tasks = Task.all.default_sort.page(params[:page])
+    if params[:sort_expired_at]
+      @tasks = Task.all.sort_expired_at.page(params[:page])
+    elsif params[:sort_priority]
+      @tasks = Task.all.sort_priority.page(params[:page])
+    end
+
+    #タイトルとステータス絞り込み
+    if params[:task].present?
+      if params[:task][:title].present? && params[:task][:status].present?
+        @tasks = @tasks.scope_title(params[:task][:title])
+        @tasks = @tasks.scope_status(params[:task][:status])
+      elsif params[:task][:title].present?
+        @tasks = @tasks.scope_title(params[:task][:title])
+      elsif params[:task][:status].present? 
+        @tasks = @tasks.scope_status(params[:task][:status])
+      end
+    end
   end
+
 
   def new
     @task = Task.new
@@ -45,6 +63,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:content, :title)
+    params.require(:task).permit(:content, :title, :expired_at, :status, :priority)
   end
 end
