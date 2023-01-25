@@ -10,5 +10,6 @@
 User.create!(
   email: "first@first.com",
   name: "first",
-  passward_digest: "first"
+  password: "first"
+  password_confirmation: "first"
 )
