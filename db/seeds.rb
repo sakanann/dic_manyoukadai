@@ -5,6 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+#$ rails db:seed　未実行　1/25　seed1件作成のやつ
 User.create!(
   email: "first@first.com",
   name: "first",
