@@ -20,6 +20,7 @@
 
 <table class="table">
 <head>
+  <th><%= t('.name') %></th>
   <th><%= t('.title') %></th>
   <th><%= t('.content') %></th>
   <th><%= t('.expired_at') %></th>
@@ -34,6 +35,7 @@
 <body>
 <% @tasks.each do |task| %>
   <tr class = "task_row">
+      <td><%= task.user.name %></td>
       <td><%= task.title %></td>
       <td><%= task.content %></td>
       <td><%= task.expired_at.strftime("%Y-%m-%d %H:%M") %></td>
