@@ -22,6 +22,11 @@
   <%= f.email_field :email %>
 </div>
 
+<div class = "email" >
+  <%= f.label :管理者権限 %>
+  <%= f.select :admin, [["一般ユーザー","false"],["管理者ユーザー","true"]] %>
+</div>
+
 <div class = "password" >
   <%= f.label :パスワード %>
   <%= f.password_field :password %>
