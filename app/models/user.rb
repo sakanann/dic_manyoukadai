@@ -14,7 +14,7 @@ class User < ApplicationRecord
 
 
   def admin_exist_check
-    if User.where(admin: true).count <= 1 && self.admin == true (←ここ)
+    if User.where(admin: true).count <= 1 && self.admin == true
       throw(:abort)
     end
   end
