@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   skip_before_action :login_required, only: [:new, :create]
-  before_action :login_already, only: [:new]
 
   def new
     @user = User.new
@@ -18,6 +17,10 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    unless @user == current_user
+      flash[:notice] = "権限がありません"
+      redirect_to  tasks_path
+    end
   end
 
   private
@@ -26,10 +29,5 @@ class UsersController < ApplicationController
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
 
-  def login_already
-    if current_user
-      flash[:notice]="ログイン中です"
-      redirect_to user_path(current_user.id)
-    end
-  end
+
 end
