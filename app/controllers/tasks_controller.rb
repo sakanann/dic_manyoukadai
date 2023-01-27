@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all
+    @tasks = current_user.tasks
 
     if params[:sort_expired_at]
       @tasks = @tasks.all.sort_expired_at.page(params[:page])
