@@ -1,29 +1,46 @@
 class Admin::UsersController < ApplicationController
-  skip_before_action :if_not_admin
-  def new
-    @user = User.new
-  end
+  before_action :if_not_admin
 
-  def create
-    @user = User.new(user_params)
-    if @user.save
-      session[:user_id] = @user.id
-      redirect_to user_path(@user.id)
-    else
-      render :new
-    end
-  end
+def index
+  @users = User.all.includes(:tasks)
+end
 
-  def show
-    @user = User.find(params[:id])
-  end
+def new
+  @user = User.new
+end
 
-  def index
-    @users = User.all
+def create
+  @user = User.new(user_params)
+  if @user.save
+    redirect_to user_path(@user.id)
+  else
+    render :new
   end
+end
+
+def edit
+  @user = User.find(params[:id])
+end
+
+def update
+  @user = User.find(params[:id])
+  if @user.update(user_params)
+      flash[:notice] = "情報を編集しました！"
+      redirect_to tasks_path
+  else
+      render :edit
+  end
+end
+
+def show
+  @user = User.find(params[:id])
+end
 
   def destroy
-
+    @user = User.find(params[:id])
+    @user.destroy
+    flash[:notice] = "ユーザーをを削除しました"
+    redirect_to admin_users_path
   end
 
   private
