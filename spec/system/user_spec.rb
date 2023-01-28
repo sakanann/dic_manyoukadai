@@ -69,7 +69,6 @@ RSpec.describe 'ユーザー管理機能' , type: :system do
         fill_in 'session[email]', with: user.email
         fill_in 'session[password]', with: user.password
         click_button "Log in"
-        sleep(2)
         visit admin_users_path
         expect(current_path).to eq admin_users_path
       end
@@ -83,6 +82,70 @@ RSpec.describe 'ユーザー管理機能' , type: :system do
         click_button "Log in"
         visit admin_users_path
         expect(current_path).not_to eq admin_users_path
+      end
+    end
+
+    context '管理ユーザーがユーザーの新規登録をした場合' do
+      it 'ユーザの新規登録ができる' do
+        visit new_session_path
+        fill_in 'session[email]', with: user.email
+        fill_in 'session[password]', with: user.password
+        click_button "Log in"
+        visit admin_users_path
+        click_on "ユーザーを登録する"
+        fill_in 'user[name]', with: 'mokemoke'
+        fill_in 'user[email]', with: 'mokemoke@gmail.com'
+        fill_in 'user[password]', with: 'mokemoke'
+        fill_in 'user[password_confirmation]', with: 'mokemoke'
+        select '一般ユーザー', from: :user_admin
+        click_button "登録"
+        visit admin_users_path
+        expect(page).to have_content 'mokemoke'
+      end
+    end
+
+    context '管理ユーザーはユーザーの詳細にアクセスをした場合' do
+      it 'ユーザーの詳細画面が表示される' do
+        visit new_session_path
+        fill_in 'session[email]', with: user.email
+        fill_in 'session[password]', with: user.password
+        click_button "Log in"
+        visit admin_users_path
+        visit admin_user_path(user1)
+        expect(current_path).to eq admin_user_path(user1)
+      end
+    end
+
+    context '管理ユーザーはユーザーの編集画面で名前と権限を編集した場合' do
+      it 'ユーザーの詳細画面で変更後の名前が表示される' do
+        visit new_session_path
+        fill_in 'session[email]', with: user.email
+        fill_in 'session[password]', with: user.password
+        click_button "Log in"
+        visit admin_users_path
+        visit edit_admin_user_path(user1)
+        fill_in 'user[name]', with: user1.name
+        fill_in 'user[email]', with: user1.email
+        fill_in 'user[password]', with: user1.password
+        fill_in 'user[password_confirmation]', with: user1.password
+        select '一般ユーザー', from: :user_admin
+        click_button "登録"
+        visit admin_user_path(user1)
+        expect(page).to have_content user1.name
+      end
+    end
+
+    context '管理ユーザがユーザ一覧画面の削除をクリックした場合' do
+      it 'ユーザの削除ができる' do
+        visit new_session_path
+        fill_in 'session[email]', with: user.email
+        fill_in 'session[password]', with: user.password
+        click_button "Log in"
+        visit admin_users_path
+        click_on '削除', match: :first
+        # sleep(7)
+        expect(page).to have_content user.name
+        # expect(page).to have_content '管理者'
       end
     end
   end
