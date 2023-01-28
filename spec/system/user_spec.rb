@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'ユーザー管理機能' , type: :system do
+  let(:user) { FactoryBot.create(:user) }
   let(:user1) { FactoryBot.create(:user1) }
   let(:user2) { FactoryBot.create(:user2) }
 
@@ -44,7 +45,6 @@ RSpec.describe 'ユーザー管理機能' , type: :system do
         fill_in 'session[email]', with: user1.email
         fill_in 'session[password]', with: user1.password
         click_on "Log in"
-        sleep(1)
         visit user_path(user2)
         expect(current_path).to eq tasks_path
       end
@@ -58,6 +58,31 @@ RSpec.describe 'ユーザー管理機能' , type: :system do
       click_on "Log in"
       click_on "Logout"
       expect(current_path).to eq new_session_path
+      end
+    end
+  end
+
+  describe '管理画面のテスト' do
+    context '管理ユーザが管理画面にアクセスした場合' do
+      it '管理画面にアクセス出来る' do
+        visit new_session_path
+        fill_in 'session[email]', with: user.email
+        fill_in 'session[password]', with: user.password
+        click_button "Log in"
+        sleep(2)
+        visit admin_users_path
+        expect(current_path).to eq admin_users_path
+      end
+    end
+
+    context '一般ユーザが管理画面にアクセスした場合' do
+      it '管理画面にアクセス出来ない' do
+        visit new_session_path
+        fill_in 'session[email]', with: user1.email
+        fill_in 'session[password]', with: user1.password
+        click_button "Log in"
+        visit admin_users_path
+        expect(current_path).not_to eq admin_users_path
       end
     end
   end
