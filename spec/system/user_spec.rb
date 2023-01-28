@@ -16,5 +16,12 @@ RSpec.describe 'ユーザー管理機能' , type: :system do
         expect(page).to have_content '坂本'
       end
     end
+
+    context 'ユーザがログインせずタスク一覧画面に飛ぼうとした場合' do
+      it 'ログイン画面に遷移する' do
+        visit tasks_path
+        expect(page).to have_content 'Log in'
+      end
+    end
   end
 end
