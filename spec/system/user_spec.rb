@@ -11,7 +11,6 @@ RSpec.describe 'ユーザー管理機能' , type: :system do
         fill_in 'user_email', with: 'sakamoto@dive.com'
         fill_in 'user_password', with: 'sakamoto'
         fill_in 'user_password_confirmation', with: 'sakamoto'
-        sleep(4)
         click_on "登録"
         expect(page).to have_content '坂本'
       end
@@ -22,6 +21,22 @@ RSpec.describe 'ユーザー管理機能' , type: :system do
         visit tasks_path
         expect(page).to have_content 'Log in'
       end
+    end
+  end
+
+  describe 'セッション機能のテスト' do
+    context 'ログインした場合' do
+      it '自分の詳細画面(マイページ)に飛べる' do
+        visit new_user_path
+        fill_in 'user_name', with: '坂本'
+        fill_in 'user_email', with: 'sakamoto@dive.com'
+        fill_in 'user_password', with: 'sakamoto'
+        fill_in 'user_password_confirmation', with: 'sakamoto'
+        click_on "登録"
+        sleep(5)
+        expect(page).to have_content '坂本のページ'
+      end
+      
     end
   end
 end
