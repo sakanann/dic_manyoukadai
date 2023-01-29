@@ -1,11 +1,20 @@
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all.default_sort.page(params[:page])
+    @tasks = current_user.tasks
+
     if params[:sort_expired_at]
-      @tasks = Task.all.sort_expired_at.page(params[:page])
+      @tasks = @tasks.all.sort_expired_at.page(params[:page])
     elsif params[:sort_priority]
-      @tasks = Task.all.sort_priority.page(params[:page])
-    end
+      @tasks = @tasks.all.sort_priority.page(params[:page])
+    else
+      @tasks = @tasks.all.default_sort.page(params[:page])
+    end 
+    # @tasks = Task.all.default_sort.page(params[:page])
+    # if params[:sort_expired_at]
+    #   @tasks = Task.all.sort_expired_at.page(params[:page])
+    # elsif params[:sort_priority]
+    #   @tasks = Task.all.sort_priority.page(params[:page])
+    # end
 
     #タイトルとステータス絞り込み
     if params[:task].present?
@@ -27,7 +36,9 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
     if @task.save
+    # binding.pry
       flash[:notice] = "タスクを作成しました！"
       redirect_to tasks_path
     else

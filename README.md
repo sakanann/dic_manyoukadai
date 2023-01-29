@@ -1,4 +1,4 @@
-## table schema 
+## table schema
 ### [ column : type ]
 <br>
 

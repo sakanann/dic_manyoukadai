@@ -9,6 +9,7 @@ ja:
           has_many: "%{record}が存在しているので削除できません"
   tasks:
     index:
+      name: タスク作成者
       title: タスク名
       content: タスク詳細
       expired_at: 終了期限
