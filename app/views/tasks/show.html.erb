@@ -1,3 +1,5 @@
+<h1></h1>
+<br>
 <b>タスク名</b>
 <%= @task.title %>
 <br>
@@ -18,8 +20,13 @@
 <%= @task.status %>
 <br>
 
+<b>ラベル:</b>
+<%= @task.labels.pluck(:label_name) %>
+<br>
+
+
 <b>優先順位</b>
 <%= @task.priority %>
 <br>
-
+<br>
 <%= link_to '一覧', tasks_path %>

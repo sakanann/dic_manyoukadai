@@ -5,7 +5,7 @@
   <%= form.text_field :title %>
 </div>
 
-<div class="task_field">  
+<div class="task_field">
   <%= form.label '内容' %>
   <%= form.text_area :content %>
 </div>
@@ -25,6 +25,14 @@
   <%= form.select :priority, Task.priorities.keys, { include_blank: "選択してください"} %>
 </div>
 
-  
+<div class="task_field">
+    <%= form.label 'ラベル' %>
+    <br>
+    <% Label.all.each do |label|%>
+      <%= form.check_box :label_ids, { multiple: true, checked: @task.labels.find_by(id: label.id).present?, include_hidden: false}, label[:id] %>
+      <%= label.label_name %>
+    <% end %>
+</div>
+
   <%= form.submit"登録する" %>
 <% end %>
