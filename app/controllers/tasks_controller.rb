@@ -9,12 +9,6 @@ class TasksController < ApplicationController
     else
       @tasks = @tasks.all.default_sort.page(params[:page])
     end
-    # @tasks = Task.all.default_sort.page(params[:page])
-    # if params[:sort_expired_at]
-    #   @tasks = Task.all.sort_expired_at.page(params[:page])
-    # elsif params[:sort_priority]
-    #   @tasks = Task.all.sort_priority.page(params[:page])
-    # end
 
     #タイトルとステータス絞り込み
     if params[:task].present?
