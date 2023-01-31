@@ -8,14 +8,16 @@
   <%= form.search_field :title %>
   <%= t('.status') %>
   <%= form.select :status, [["未着手", 0], ["着手中", 1], [ "完了", 2]], include_blank: '選択してください', class: 'form-control', required: true %>
-  <%= form.submit '検索' %>
+  <%= t('.label_name')%>
+  <%= form.select( "label_ids", Label.pluck(:label_name, :id), { include_blank: '選択してください' }) %>
+  <%= form.submit '検索', class: 'btn btn-primary' %>
   </div>
 <% end %>
 
 <div class="btn-group">
 <button type="button" class="btn btn-light"><%= link_to "終了期限でソートする", tasks_path(sort_expired_at: "true") %></button>
 <button type="button" class="btn btn-light"><%= link_to '優先順位でソート', tasks_path(sort_priority: "true") %></button>
-<button type="button" class="btn btn-light"><%= link_to "作成日でソートする", tasks_path %></button>
+<button type="button" class="btn btn-light"><%= link_to "作成日でソートする", tasks_path(default_sort: "true") %></button>
 </div>
 
 <table class="table">
@@ -23,10 +25,11 @@
   <th><%= t('.name') %></th>
   <th><%= t('.title') %></th>
   <th><%= t('.content') %></th>
+  <th><%= t('.label_name') %></th>
   <th><%= t('.expired_at') %></th>
-  <th><%= t('.created_at') %></th>
   <th><%= t('.status') %></th>
   <th><%= t('.priority') %></th>
+  <th><%= t('.created_at') %></th>
   <th></th>
   <th></th>
   <th></th>
@@ -38,10 +41,13 @@
       <td><%= task.user.name %></td>
       <td><%= task.title %></td>
       <td><%= task.content %></td>
+      <td><% task.labels.each do |label| %>
+      <%= label.label_name %>
+      <% end %></td>
       <td><%= task.expired_at.strftime("%Y-%m-%d %H:%M") %></td>
-      <td><%= task.created_at.strftime("%Y-%m-%d %H:%M") %></td>
       <td><%= task.status %></td>
       <td><%= task.priority %></td>
+      <td><%= task.created_at.strftime("%Y-%m-%d %H:%M") %></td>
   <td><%= link_to '詳細', task_path(task.id), class:"btn btn-outline-primary" %></td>
   <td><%= link_to '編集', edit_task_path(task.id),class:"btn btn-outline-success" %></td>
   <td><%= link_to '削除', task_path(task.id), method: :delete, data: { confirm: '本当に削除しますか？'}, class:"btn btn-outline-danger" %></td>

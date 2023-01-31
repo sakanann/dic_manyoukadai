@@ -12,7 +12,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         select '高', from: 'task[priority]'
 
         click_on '登録する'
-        
+
         expect(page).to have_content 'test'
         expect(page).to have_content '内容'
         expect(current_path).to eq '/tasks'
@@ -70,7 +70,7 @@ RSpec.describe 'タスク管理機能', type: :system do
     #   end
     # end
   end
-  
+
   describe '詳細表示機能' do
     context '任意のタスク詳細画面に遷移した場合' do
       it '該当タスクの内容が表示される' do
@@ -97,7 +97,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(page).not_to have_content task2.title
       end
     end
-  
+
     context 'ステータス検索をした場合' do
       it "ステータスに完全一致するタスクが絞り込まれる" do
         task1 = FactoryBot.create(:task, status: 0 )
@@ -110,7 +110,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         # expect(page).not_to have_content task1.status
       end
     end
-  
+
     context 'タイトルのあいまい検索とステータス検索をした場合' do
       it "検索キーワードをタイトルに含み、かつステータスに完全一致するタスク絞り込まれる" do
         task1 = FactoryBot.create(:task, title: '万葉課題ステップ3')

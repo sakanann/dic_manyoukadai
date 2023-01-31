@@ -16,10 +16,10 @@ ja:
       status: ステータス
       created_at: タスク作成日
       priority: 優先順位
-  
-  
-  
-  
+      label_name: ラベル名
+
+
+
   date:
     abbr_day_names:
     - 日

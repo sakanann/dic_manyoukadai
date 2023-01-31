@@ -8,13 +8,7 @@ class TasksController < ApplicationController
       @tasks = @tasks.all.sort_priority.page(params[:page])
     else
       @tasks = @tasks.all.default_sort.page(params[:page])
-    end 
-    # @tasks = Task.all.default_sort.page(params[:page])
-    # if params[:sort_expired_at]
-    #   @tasks = Task.all.sort_expired_at.page(params[:page])
-    # elsif params[:sort_priority]
-    #   @tasks = Task.all.sort_priority.page(params[:page])
-    # end
+    end
 
     #タイトルとステータス絞り込み
     if params[:task].present?
@@ -23,8 +17,12 @@ class TasksController < ApplicationController
         @tasks = @tasks.scope_status(params[:task][:status])
       elsif params[:task][:title].present?
         @tasks = @tasks.scope_title(params[:task][:title])
-      elsif params[:task][:status].present? 
+      elsif params[:task][:status].present?
         @tasks = @tasks.scope_status(params[:task][:status])
+      elsif params[:task][:label_ids].present?
+        @tasks = @tasks.scope_label(params[:task][:label_ids])
+      # elsif params[:label_id].present?
+      #   @tasks = @tasks.joins(:labels).where(labels: { id: params[:label_id] })
       end
     end
   end
@@ -45,11 +43,13 @@ class TasksController < ApplicationController
       render :new
     end
   end
-  
+
   def show
     @task = Task.find(params[:id])
+    labels = LabelTask.where(task_id: @task.id).pluck(:label_id)
+    @labels = Label.find(labels)######################################1/31 01:16
   end
-  
+
   def edit
     @task = Task.find(params[:id])
   end
@@ -59,7 +59,7 @@ class TasksController < ApplicationController
     if @task.update(task_params)
       flash[:notice] = "タスクを編集しました！"
       redirect_to tasks_path
-    else 
+    else
       render :edit
     end
   end
@@ -74,6 +74,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:content, :title, :expired_at, :status, :priority)
+    params.require(:task).permit(:content, :title, :expired_at, :status, :priority, { label_ids: [] })
   end
 end
