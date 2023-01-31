@@ -6,10 +6,16 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-#$ rails db:seed 未実行 1/25 seed1件作成のやつ
-User.create!(
-  name: "管理者",
-  email: "admin@example.com",
-  password: "admin@example.com",
-  password_confirmation: "admin@example.com",
-  admin: true)
+#$ rails db:seed 管理者User
+# User.create!(
+#   name: "管理者",
+#   email: "admin@example.com",
+#   password: "admin@example.com",
+#   password_confirmation: "admin@example.com",
+#   admin: true)
+
+  # <labelデータ> 10.times →(１..10)
+(1..10).each do |i|
+  unti = '💩'*i
+  Label.create!(label_name: unti)
+end
