@@ -28,10 +28,7 @@
 <div class="task_field">
     <%= form.label 'ラベル' %>
     <br>
-    <% Label.all.each do |label|%>
-      <%= form.check_box :label_ids, { multiple: true, checked: @task.labels.find_by(id: label.id).present?, include_hidden: false}, label[:id] %>
-      <%= label.label_name %>
-    <% end %>
+    <%= form.collection_check_boxes(:label_ids, Label.all, :id, :label_name) %>
 </div>
 
   <%= form.submit"登録する" %>

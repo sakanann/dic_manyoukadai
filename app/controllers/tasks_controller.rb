@@ -25,6 +25,10 @@ class TasksController < ApplicationController
         @tasks = @tasks.scope_title(params[:task][:title])
       elsif params[:task][:status].present?
         @tasks = @tasks.scope_status(params[:task][:status])
+      elsif params[:task][:label_ids].present?
+        @tasks = @tasks.scope_label(params[:task][:label_ids])
+      # elsif params[:label_id].present?
+      #   @tasks = @tasks.joins(:labels).where(labels: { id: params[:label_id] })
       end
     end
   end

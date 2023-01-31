@@ -15,7 +15,10 @@
 #   admin: true)
 
   # <labelデータ> 10.times →(１..10)
-(1..10).each do |i|
-  unti = '💩'*i
-  Label.create!(label_name: unti)
+# (1..10).each do |i|
+#   unti = '💩'*i
+#   Label.create!(label_name: unti)
+# end
+10.times do |i|
+  Label.create!(label_name: "sakamoto#{i+1}")
 end
